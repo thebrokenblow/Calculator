@@ -12,16 +12,16 @@ public enum MathFunction
 public enum MathOperation
 {
     Add,
-    Subtract,
+    Sub,
     Div,
     Mul,
     Mod,
     Pow
 }
 
-public static class MathOperations
+public class MathOperations
 {
-    public static readonly Dictionary<MathFunction, Func<double, double>> Functions = new()
+    public Dictionary<MathFunction, Func<double, double>> FunctionsByName { get; set; } = new()
     {
         { MathFunction.Sin, Math.Sin },
         { MathFunction.Cos, Math.Cos },
@@ -30,10 +30,10 @@ public static class MathOperations
         { MathFunction.Ceil, Math.Ceiling }
     };
 
-    public static readonly Dictionary<MathOperation, Func<double, double, double>> Operations = new()
+    public Dictionary<MathOperation, Func<double, double, double>> Operations { get; set; } = new()
     {
         { MathOperation.Add, (a, b) => a + b },
-        { MathOperation.Subtract, (a, b) => a - b },
+        { MathOperation.Sub, (a, b) => a - b },
         { MathOperation.Mul, (a, b) => a * b },
         { MathOperation.Div, (a, b) => a / b },
         { MathOperation.Mod, (a, b) => a % b },

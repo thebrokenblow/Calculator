@@ -9,6 +9,7 @@
     Title="MainWindow"
     Width="800"
     Height="750"
+    d:DataContext="{d:DesignInstance Type=viewmodel:CalculatorViewModel}"
     mc:Ignorable="d">
 
     <Grid>
@@ -64,7 +65,7 @@
                 Grid.Row="0"
                 Grid.Column="3"
                 Command="{Binding OperatorCommand}"
-                CommandParameter="/"
+                CommandParameter="Div"
                 Content="/" />
 
             <Button
@@ -89,7 +90,7 @@
                 Grid.Row="1"
                 Grid.Column="3"
                 Command="{Binding OperatorCommand}"
-                CommandParameter="*"
+                CommandParameter="Mul"
                 Content="*" />
 
             <Button
@@ -114,7 +115,7 @@
                 Grid.Row="2"
                 Grid.Column="3"
                 Command="{Binding OperatorCommand}"
-                CommandParameter="-"
+                CommandParameter="Sub"
                 Content="-" />
 
             <Button
@@ -133,7 +134,7 @@
                 Grid.Row="3"
                 Grid.Column="3"
                 Command="{Binding OperatorCommand}"
-                CommandParameter="+"
+                CommandParameter="Add"
                 Content="+" />
 
             <Button
@@ -151,7 +152,7 @@
                 Grid.Row="4"
                 Grid.Column="3"
                 Command="{Binding OperatorCommand}"
-                CommandParameter="%"
+                CommandParameter="Mod"
                 Content="%" />
 
             <Button
@@ -170,7 +171,7 @@
                 Grid.Row="5"
                 Grid.Column="2"
                 Command="{Binding OperatorCommand}"
-                CommandParameter="^"
+                CommandParameter="Pow"
                 Content="^" />
             <Button
                 Grid.Row="5"
