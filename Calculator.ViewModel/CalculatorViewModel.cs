@@ -1,46 +1,17 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Calculator.ViewModel;
 
-public class CalculatorViewModel  : INotifyPropertyChanged
+public partial class CalculatorViewModel : ObservableObject
 {
-    private double _firstNumber;
-    private double _secondNumber;
-    private string _operator;
     private bool _isOperationPerformed;
-    private string _display;
 
-    public string Display
-    {
-        get => _display;
-        set
-        {
-            _display = value;
-            OnPropertyChanged();
-        }
-    }
+    [ObservableProperty]
+    private string _display = "0";
 
-    public ICommand NumberCommand { get; }
-    public ICommand OperatorCommand { get; }
-    public ICommand EqualCommand { get; }
-    public ICommand ClearCommand { get; }
-    public ICommand DecimalCommand { get; }
-    public ICommand FunctionCommand { get; }
-
-    public CalculatorViewModel()
-    {
-        Display = "0";
-        NumberCommand = new RelayCommand(NumberButton_Click);
-        OperatorCommand = new RelayCommand(OperatorButton_Click);
-        EqualCommand = new RelayCommand(EqualButton_Click);
-        ClearCommand = new RelayCommand(ClearButton_Click);
-        DecimalCommand = new RelayCommand(DecimalButton_Click);
-        FunctionCommand = new RelayCommand(FunctionButton_Click);
-    }
-
-    private void NumberButton_Click(object parameter)
+    [RelayCommand]
+    private void NumberCommand(object parameter)
     {
         if (Display == "0" && Display != null)
         {
@@ -56,58 +27,36 @@ public class CalculatorViewModel  : INotifyPropertyChanged
         Display += parameter.ToString();
     }
 
-    private void OperatorButton_Click(object parameter)
+    [RelayCommand]
+    private void OperatorCommand(object parameter)
     {
-        _operator = parameter.ToString();
-        _firstNumber = Convert.ToDouble(Display);
+        if (parameter is null)
+        {
+            throw new Exception();
+        }
+
+        var _operator = parameter.ToString();
+        var firstNumber = Convert.ToDouble(Display);
         _isOperationPerformed = true;
     }
 
-    private void EqualButton_Click(object parameter)
+    [RelayCommand]
+    private void EqualCommand(object parameter)
     {
-        _secondNumber = Convert.ToDouble(Display);
-        double result = 0;
-
-        switch (_operator)
-        {
-            case "+":
-                result = _firstNumber + _secondNumber;
-                break;
-            case "-":
-                result = _firstNumber - _secondNumber;
-                break;
-            case "*":
-                result = _firstNumber * _secondNumber;
-                break;
-            case "/":
-                if (_secondNumber != 0)
-                    result = _firstNumber / _secondNumber;
-                else
-                    Display = "Error";
-                break;
-            case "%":
-                if (_secondNumber != 0)
-                    result = _firstNumber % _secondNumber;
-                else
-                    Display = "Error";
-                break;
-            case "^":
-                result = Math.Pow(_firstNumber, _secondNumber);
-                break;
-        }
+        var secondNumber = Convert.ToDouble(Display);
+        double result = 0; //Получить значение с модели
 
         Display = result.ToString();
     }
 
-    private void ClearButton_Click(object parameter)
+    [RelayCommand]
+    private void ClearCommand(object parameter)
     {
         Display = "0";
-        _firstNumber = 0;
-        _secondNumber = 0;
-        _operator = "";
     }
 
-    private void DecimalButton_Click(object parameter)
+    [RelayCommand]
+    private void DecimalCommand(object parameter)
     {
         if (!Display.Contains('.'))
         {
@@ -115,7 +64,8 @@ public class CalculatorViewModel  : INotifyPropertyChanged
         }
     }
 
-    private void FunctionButton_Click(object parameter)
+    [RelayCommand]
+    private void FunctionCommand(object parameter)
     {
         double number = Convert.ToDouble(Display);
         double result = 0;
@@ -128,35 +78,4 @@ public class CalculatorViewModel  : INotifyPropertyChanged
 
         Display = result.ToString();
     }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-}
-
-public class RelayCommand(Action<object> execute, Func<object, bool> canExecute = null) : ICommand
-{
-    private readonly Action<object> _execute = execute;
-    private readonly Func<object, bool> _canExecute = canExecute;
-
-    public event EventHandler? CanExecuteChanged;
-
-    public bool CanExecute(object parameter)
-    {
-        return _canExecute == null || _canExecute(parameter);
-    }
-
-    public void Execute(object parameter)
-    {
-        _execute(parameter);
-    }
-
-    //public event EventHandler CanExecuteChanged
-    //{
-    //    add { CommandManager.RequerySuggested += value; }
-    //    remove { CommandManager.RequerySuggested -= value; }
-    //}
 }
