@@ -27,7 +27,7 @@ public static class MathOperations
             { MathFunction.Floor, Math.Floor },
             { MathFunction.Ceil, Math.Ceiling }
         };
-    public static readonly Dictionary<MathOperation, Func<double, double, double>> Operations = new Dictionary<MathOperation, Func<double, double>>
+    public static readonly Dictionary<MathOperation, Func<double, double, double>> Operations = new Dictionary<MathOperation, Func<double, double,double>>
         {
             { MathOperation.Add, (a,b) => { a + b; } },
             { MathOperation.Subtract, (a,b) => { a - b; } },
