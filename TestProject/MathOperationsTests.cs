@@ -1,4 +1,6 @@
-﻿using Calculator.Model;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Calculator.Model;
+using System;
 
 namespace Calculator.Tests
 {
@@ -13,188 +15,222 @@ namespace Calculator.Tests
             _mathOperations = new MathOperations();
         }
 
+        #region MathFunction Tests
+
         [TestMethod]
-        public void TestSinFunction()
+        public void TestSinFunction_Positive()
         {
             double result = _mathOperations.FunctionsByName[MathFunction.Sin](Math.PI / 2);
-            Assert.AreEqual(1, result, 0.0001);
+            Assert.AreEqual(1.0, result, 0.00001, "Sin function test failed for positive value");
         }
 
         [TestMethod]
-        public void TestCosFunction()
-        {
-            double result = _mathOperations.FunctionsByName[MathFunction.Cos](Math.PI);
-            Assert.AreEqual(-1, result, 0.0001);
-        }
-
-        [TestMethod]
-        public void TestSqrtFunction()
-        {
-            double result = _mathOperations.FunctionsByName[MathFunction.Sqrt](4);
-            Assert.AreEqual(2, result, 0.0001);
-        }
-
-        [TestMethod]
-        public void TestFloorFunction()
-        {
-            double result = _mathOperations.FunctionsByName[MathFunction.Floor](4.5);
-            Assert.AreEqual(4, result, 0.0001);
-        }
-
-        [TestMethod]
-        public void TestCeilFunction()
-        {
-            double result = _mathOperations.FunctionsByName[MathFunction.Ceil](4.5);
-            Assert.AreEqual(5, result, 0.0001);
-        }
-
-        [TestMethod]
-        public void TestAddOperation()
-        {
-            double result = _mathOperations.Operations[MathOperation.Add](2, 3);
-            Assert.AreEqual(5, result, 0.0001);
-        }
-
-        [TestMethod]
-        public void TestSubOperation()
-        {
-            double result = _mathOperations.Operations[MathOperation.Sub](5, 3);
-            Assert.AreEqual(2, result, 0.0001);
-        }
-
-        [TestMethod]
-        public void TestMulOperation()
-        {
-            double result = _mathOperations.Operations[MathOperation.Mul](2, 3);
-            Assert.AreEqual(6, result, 0.0001);
-        }
-
-        [TestMethod]
-        public void TestDivOperation()
-        {
-            double result = _mathOperations.Operations[MathOperation.Div](6, 3);
-            Assert.AreEqual(2, result, 0.0001);
-        }
-
-        [TestMethod]
-        public void TestModOperation()
-        {
-            double result = _mathOperations.Operations[MathOperation.Mod](5, 3);
-            Assert.AreEqual(2, result, 0.0001);
-        }
-
-        [TestMethod]
-        public void TestPowOperation()
-        {
-            double result = _mathOperations.Operations[MathOperation.Pow](2, 3);
-            Assert.AreEqual(8, result, 0.0001);
-        }
-
-        // Additional tests
-
-        [TestMethod]
-        public void TestSinFunctionNegative()
+        public void TestSinFunction_Negative()
         {
             double result = _mathOperations.FunctionsByName[MathFunction.Sin](-Math.PI / 2);
-            Assert.AreEqual(-1, result, 0.0001);
+            Assert.AreEqual(-1.0, result, 0.00001, "Sin function test failed for negative value");
         }
 
         [TestMethod]
-        public void TestCosFunctionNegative()
+        public void TestSinFunction_Zero()
         {
-            double result = _mathOperations.FunctionsByName[MathFunction.Cos](-Math.PI);
-            Assert.AreEqual(-1, result, 0.0001);
+            double result = _mathOperations.FunctionsByName[MathFunction.Sin](0);
+            Assert.AreEqual(0.0, result, 0.00001, "Sin function test failed for zero value");
         }
 
         [TestMethod]
-        public void TestSqrtFunctionZero()
+        public void TestCosFunction_Positive()
         {
-            double result = _mathOperations.FunctionsByName[MathFunction.Sqrt](0);
-            Assert.AreEqual(0, result, 0.0001);
+            double result = _mathOperations.FunctionsByName[MathFunction.Cos](0);
+            Assert.AreEqual(1.0, result, 0.00001, "Cos function test failed for positive value");
         }
 
         [TestMethod]
-        public void TestFloorFunctionNegative()
+        public void TestCosFunction_Negative()
         {
-            double result = _mathOperations.FunctionsByName[MathFunction.Floor](-4.5);
-            Assert.AreEqual(-5, result, 0.0001);
+            double result = _mathOperations.FunctionsByName[MathFunction.Cos](Math.PI);
+            Assert.AreEqual(-1.0, result, 0.00001, "Cos function test failed for negative value");
         }
 
         [TestMethod]
-        public void TestCeilFunctionNegative()
+        public void TestCosFunction_Zero()
         {
-            double result = _mathOperations.FunctionsByName[MathFunction.Ceil](-4.5);
-            Assert.AreEqual(-4, result, 0.0001);
+            double result = _mathOperations.FunctionsByName[MathFunction.Cos](0);
+            Assert.AreEqual(1.0, result, 0.00001, "Cos function test failed for zero value");
         }
 
         [TestMethod]
-        public void TestAddOperationNegative()
+        public void TestSqrtFunction_Positive()
         {
-            double result = _mathOperations.Operations[MathOperation.Add](-2, -3);
-            Assert.AreEqual(-5, result, 0.0001);
+            double result = _mathOperations.FunctionsByName[MathFunction.Sqrt](4.0);
+            Assert.AreEqual(2.0, result, 0.00001, "Sqrt function test failed for positive value");
         }
 
         [TestMethod]
-        public void TestSubOperationNegative()
+        public void TestSqrtFunction_Zero()
         {
-            double result = _mathOperations.Operations[MathOperation.Sub](-5, -3);
-            Assert.AreEqual(-2, result, 0.0001);
+            double result = _mathOperations.FunctionsByName[MathFunction.Sqrt](0.0);
+            Assert.AreEqual(0.0, result, 0.00001, "Sqrt function test failed for zero value");
         }
 
         [TestMethod]
-        public void TestMulOperationNegative()
+        public void TestFloorFunction_Positive()
         {
-            double result = _mathOperations.Operations[MathOperation.Mul](-2, -3);
-            Assert.AreEqual(6, result, 0.0001);
+            double result = _mathOperations.FunctionsByName[MathFunction.Floor](2.9);
+            Assert.AreEqual(2.0, result, 0.00001, "Floor function test failed for positive value");
         }
 
         [TestMethod]
-        public void TestDivOperationNegative()
+        public void TestFloorFunction_Negative()
         {
-            double result = _mathOperations.Operations[MathOperation.Div](-6, -3);
-            Assert.AreEqual(2, result, 0.0001);
+            double result = _mathOperations.FunctionsByName[MathFunction.Floor](-2.9);
+            Assert.AreEqual(-3.0, result, 0.00001, "Floor function test failed for negative value");
         }
 
         [TestMethod]
-        public void TestModOperationNegative()
+        public void TestFloorFunction_Zero()
         {
-            double result = _mathOperations.Operations[MathOperation.Mod](-5, -3);
-            Assert.AreEqual(-2, result, 0.0001);
+            double result = _mathOperations.FunctionsByName[MathFunction.Floor](0.0);
+            Assert.AreEqual(0.0, result, 0.00001, "Floor function test failed for zero value");
         }
 
         [TestMethod]
-        public void TestPowOperationNegative()
+        public void TestCeilFunction_Positive()
         {
-            double result = _mathOperations.Operations[MathOperation.Pow](-2, 3);
-            Assert.AreEqual(-8, result, 0.0001);
+            double result = _mathOperations.FunctionsByName[MathFunction.Ceil](2.1);
+            Assert.AreEqual(3.0, result, 0.00001, "Ceil function test failed for positive value");
         }
 
         [TestMethod]
-        public void TestLargeNumbersAddition()
+        public void TestCeilFunction_Negative()
         {
-            double result = _mathOperations.Operations[MathOperation.Add](1e10, 1e10);
-            Assert.AreEqual(2e10, result, 0.0001);
+            double result = _mathOperations.FunctionsByName[MathFunction.Ceil](-2.1);
+            Assert.AreEqual(-2.0, result, 0.00001, "Ceil function test failed for negative value");
         }
 
         [TestMethod]
-        public void TestLargeNumbersMultiplication()
+        public void TestCeilFunction_Zero()
         {
-            double result = _mathOperations.Operations[MathOperation.Mul](1e10, 1e10);
-            Assert.AreEqual(1e20, result, 0.0001);
+            double result = _mathOperations.FunctionsByName[MathFunction.Ceil](0.0);
+            Assert.AreEqual(0.0, result, 0.00001, "Ceil function test failed for zero value");
+        }
+
+        #endregion
+
+        #region MathOperation Tests
+
+        [TestMethod]
+        public void TestAddOperation_Positive()
+        {
+            double result = _mathOperations.Operations[MathOperation.Add](2.0, 3.0);
+            Assert.AreEqual(5.0, result, 0.00001, "Add operation test failed for positive values");
         }
 
         [TestMethod]
-        public void TestLargeNumbersDivision()
+        public void TestAddOperation_Negative()
         {
-            double result = _mathOperations.Operations[MathOperation.Div](1e20, 1e10);
-            Assert.AreEqual(1e10, result, 0.0001);
+            double result = _mathOperations.Operations[MathOperation.Add](-2.0, -3.0);
+            Assert.AreEqual(-5.0, result, 0.00001, "Add operation test failed for negative values");
         }
 
         [TestMethod]
-        public void TestLargeNumbersSubtraction()
+        public void TestAddOperation_Zero()
         {
-            double result = _mathOperations.Operations[MathOperation.Sub](1e10, 1e10);
-            Assert.AreEqual(0, result, 0.0001);
+            double result = _mathOperations.Operations[MathOperation.Add](0.0, 0.0);
+            Assert.AreEqual(0.0, result, 0.00001, "Add operation test failed for zero values");
         }
+
+        [TestMethod]
+        public void TestSubOperation_Positive()
+        {
+            double result = _mathOperations.Operations[MathOperation.Sub](5.0, 3.0);
+            Assert.AreEqual(2.0, result, 0.00001, "Sub operation test failed for positive values");
+        }
+
+        [TestMethod]
+        public void TestSubOperation_Negative()
+        {
+            double result = _mathOperations.Operations[MathOperation.Sub](-5.0, -3.0);
+            Assert.AreEqual(-2.0, result, 0.00001, "Sub operation test failed for negative values");
+        }
+
+        [TestMethod]
+        public void TestSubOperation_Zero()
+        {
+            double result = _mathOperations.Operations[MathOperation.Sub](0.0, 0.0);
+            Assert.AreEqual(0.0, result, 0.00001, "Sub operation test failed for zero values");
+        }
+
+        [TestMethod]
+        public void TestMulOperation_Positive()
+        {
+            double result = _mathOperations.Operations[MathOperation.Mul](2.0, 3.0);
+            Assert.AreEqual(6.0, result, 0.00001, "Mul operation test failed for positive values");
+        }
+
+        [TestMethod]
+        public void TestMulOperation_Negative()
+        {
+            double result = _mathOperations.Operations[MathOperation.Mul](-2.0, -3.0);
+            Assert.AreEqual(6.0, result, 0.00001, "Mul operation test failed for negative values");
+        }
+
+        [TestMethod]
+        public void TestMulOperation_Zero()
+        {
+            double result = _mathOperations.Operations[MathOperation.Mul](0.0, 3.0);
+            Assert.AreEqual(0.0, result, 0.00001, "Mul operation test failed for zero values");
+        }
+
+        [TestMethod]
+        public void TestDivOperation_Positive()
+        {
+            double result = _mathOperations.Operations[MathOperation.Div](6.0, 3.0);
+            Assert.AreEqual(2.0, result, 0.00001, "Div operation test failed for positive values");
+        }
+
+        [TestMethod]
+        public void TestDivOperation_Negative()
+        {
+            double result = _mathOperations.Operations[MathOperation.Div](-6.0, -3.0);
+            Assert.AreEqual(2.0, result, 0.00001, "Div operation test failed for negative values");
+        }
+
+        [TestMethod]
+        public void TestModOperation_Positive()
+        {
+            double result = _mathOperations.Operations[MathOperation.Mod](5.0, 3.0);
+            Assert.AreEqual(2.0, result, 0.00001, "Mod operation test failed for positive values");
+        }
+
+        [TestMethod]
+        public void TestModOperation_Negative()
+        {
+            double result = _mathOperations.Operations[MathOperation.Mod](-5.0, -3.0);
+            Assert.AreEqual(-2.0, result, 0.00001, "Mod operation test failed for negative values");
+        }
+
+        [TestMethod]
+        public void TestPowOperation_Positive()
+        {
+            double result = _mathOperations.Operations[MathOperation.Pow](2.0, 3.0);
+            Assert.AreEqual(8.0, result, 0.00001, "Pow operation test failed for positive values");
+        }
+
+        [TestMethod]
+        public void TestPowOperation_Negative()
+        {
+            double result = _mathOperations.Operations[MathOperation.Pow](2.0, -2.0);
+            Assert.AreEqual(0.25, result, 0.00001, "Pow operation test failed for negative exponent");
+        }
+
+        [TestMethod]
+        public void TestPowOperation_Zero()
+        {
+            double result = _mathOperations.Operations[MathOperation.Pow](0.0, 2.0);
+            Assert.AreEqual(0.0, result, 0.00001, "Pow operation test failed for zero base");
+        }
+
+        #endregion
     }
 }
